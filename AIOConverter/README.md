@@ -1,24 +1,29 @@
-# AIOConverter
+# All-in-One Converter
 
-It is a lightweight Python GUI application built with Tkinter that combines multiple conversion tools in one easy-to-use interface. Convert units of **temperature, length, area, weight, and currency** quickly and efficiently.
+A comprehensive unit converter application built with Python and Tkinter.
 
 ## Features
 
-* **Temperature Converter** (Celsius ↔ Fahrenheit)
-* **Length Converter** (meters, kilometers, miles, feet, etc.)
-* **Area Converter** (square meters, square km, acres, etc.)
-* **Weight Converter** (kg, g, mg, etc.)
-* **Currency Converter** (USD, EUR, INR, JPY, etc.)
-* Modern tabbed interface for easy navigation
-* Simple and lightweight design
+- **Currency Converter**: Real-time exchange rates (via API) with offline fallback
+- **Weight Converter**: Metric and Imperial units (mg to tonne)
+- **Length Converter**: Metric and Imperial units (mm to nautical mile)
+- **Area Converter**: Square meters, acres, hectares, etc.
+- **Temperature Converter**: Celsius, Fahrenheit, Kelvin
+- **Themes**: Toggle between Light and Dark modes
+- **Modern UI**: Clean interface with tabbed navigation
 
 ## Usage
 
-* Open the app
-* Select the conversion type from the tabs
-* Enter the value and select the units
-* Click **Convert** to see the result
-<div style="display: flex; gap: 10px;">
-  <img src="https://github.com/user-attachments/assets/ea3a32e4-f1d8-4487-961c-07a4f29324b2" width="48%" />
-  <img src="https://github.com/user-attachments/assets/4ceb864e-1aeb-445e-813b-5afcd0ad0a4d" width="48%" />
-</div>
+```bash
+python AIOConverter.py
+```
+
+## Dependencies
+
+- `requests` (for currency rates)
+- `tkinter` (built-in)
+
+## Notes
+
+- Currency rates are fetched from `exchangerate.host`
+- If offline, the app uses cached or hardcoded fallback rates

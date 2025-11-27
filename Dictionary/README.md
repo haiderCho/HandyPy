@@ -1,27 +1,21 @@
-# Dictionary App
+# Dictionary
+
+A dictionary application for word definitions.
 
 ## Features
 
-- Simple and clean dictionary lookup interface
-- Uses a modern, free dictionary API
-- Clear, consistent UI
-- Includes error handling and validation
-    
+- **Definitions**: Fetches word meanings
+- **Synonyms/Antonyms**: Shows related words
+- **UI**: Search interface with results display
+
+## Usage
+
+```bash
+python Dictionary.py
+```
 
 ## Requirements
 
-- Python 3.8+
-- `requests` library  
-    ```
-    pip install requests
-    ```
-    
-## Usage
-
-Run the application:  
-```
-python dictionary.py
-```  
-Enter a word and press **Search** to view the definition.  
-
-<img width="631" height="545" alt="Screenshot" src="https://github.com/haiderCho/HandyPy/blob/454490991bafba8c7a9fc68963b662e2945d8db4/Dictionary/Screenshot%20182040.png" />
+- Python 3.6+
+- PyDictionary (or similar API)
+- tkinter (built-in)

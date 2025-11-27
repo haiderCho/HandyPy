@@ -1,24 +1,45 @@
 # Advanced Calculator
 
+A secure calculator with advanced mathematical functions built with Python and Tkinter.
+
 ## Features
 
-* Standard arithmetic operations: `+`, `-`, `*`, `/`, `^`, `√`.
-* Scientific functions: `sin`, `cos`, `tan`, `log`, `π`, `e`.
-* Toggleable scientific mode to show/hide advanced functions.
-* Keyboard support: digits, operators, Enter for `=`, and `C` for clear.
-* Responsive button layout; all buttons visible without scrolling.
-
-## Requirements
-
-* Python 3.x
-* Tkinter (usually included with Python)
+- **Basic Operations**: Addition (+), Subtraction (-), Multiplication (*), Division (/)
+- **Advanced Functions**:
+  - Trigonometric: sin, cos, tan
+  - Logarithm: log
+  - Square root: √
+  - Power: ^
+  - Constants: π (pi), e (Euler's number)
+- **Secure Evaluation**: Uses AST-based parser (no unsafe eval())
+- **Error Handling**: Clear error messages for invalid expressions
+- **Keyboard Support**: Type expressions directly
 
 ## Usage
 
-1. Run the script:  
-   ```bash
-   python calculator.py
-   ```
-2. Use the buttons or keyboard to enter expressions.
-3. Click `Sci` to show/hide scientific functions.
-4. Click `AC` to clear, `=` to evaluate.
+```bash
+python Calculator.py
+```
+
+### Examples
+
+- Basic: `5 + 3 * 2` = 11
+- Power: `2^8` = 256
+- Trigonometry: `sin(90)` 
+- Square root: `√16` = 4
+- Constants: `π * 2` ≈ 6.28
+
+## Keyboard Shortcuts
+
+- **Numbers & Operators**: Type directly
+- **Enter**: Calculate result
+- **C**: Clear display
+
+## Security
+
+This calculator uses Abstract Syntax Tree (AST) parsing instead of Python's `eval()` function, preventing arbitrary code execution while maintaining full mathematical functionality.
+
+## Requirements
+
+- Python 3.6+
+- tkinter (built-in)

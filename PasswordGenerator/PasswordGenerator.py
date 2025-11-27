@@ -17,7 +17,7 @@ class PasswordGeneratorApp:
         # Variables
         self.strength_var = tk.StringVar(value="medium")
         self.length_var = tk.IntVar(value=12)
-           self.show_password_var = tk.BooleanVar(value=False)
+        self.show_password_var = tk.BooleanVar(value=False)
 
         self.build_ui()
 

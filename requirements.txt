@@ -1,0 +1,44 @@
+# HandyPy - Python Applets Collection
+# Global Requirements File
+
+# Core GUI Libraries  
+# tkinter is built-in with Python, no installation needed
+
+# Image Processing
+Pillow>=10.0.0
+
+# QR Code Generation
+qrcode[pil]>=7.4.2
+
+# Translation 
+deep-translator>=1.11.4
+
+# Clipboard Operations  
+pyperclip>=1.8.2
+
+# URL Shortening
+pyshorteners>=1.0.1
+
+# Web Browser (PyQt6 - Modern Qt Framework)
+PyQt6>=6.4.0
+PyQt6-WebEngine>=6.4.0
+
+# Progress Bars (optional but recommended)
+tqdm>=4.66.1
+
+# HTTP Requests (for converters and APIs)
+requests>=2.31.0
+
+# Additional utilities
+python-dateutil>=2.8.2
+
+# Development Dependencies (optional)
+# pytest>=7.4.0  # for testing
+# black>=23.7.0  # for code formatting
+# flake8>=6.1.0  # for linting
+
+# Notes:
+# - Some applets may work without all dependencies
+# - Install what you need based on which applets you plan to use
+# - To install all: pip install -r requirements.txt
+# - To install specific applets, check individual app folders

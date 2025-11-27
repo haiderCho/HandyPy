@@ -1,25 +1,26 @@
 # Age Calculator
 
-A modern Python GUI application to calculate a person’s exact age.
+A precise age calculation tool built with Python and Tkinter.
 
 ## Features
 
-* Calculates **Exact Age** in years, months, and days.
-* Shows age in **months, weeks, days, and hours**.
-* **Light/Dark mode** toggle for better usability.
-* Simple and clean GUI using **Tkinter and ttk**.
-
-## Requirements
-
-* Python 3.x
+- **Exact Age**: Calculates years, months, and days
+- **Detailed Breakdown**: Shows total months, weeks, days, and hours
+- **Date Validation**: Prevents future dates or invalid inputs
+- **Theme Support**: Switch between Light and Dark modes
+- **Modern UI**: Clean interface with validation feedback
 
 ## Usage
 
-1. Run the script:
+```bash
+python AgeCalculator.py
+```
 
-   ```bash
-   python age_calculator.py
-   ```
-2. Enter your **birth year, month, and day**.
-3. Click **Calculate Age** to see the results.
-4. Toggle between **Light and Dark mode** as desired.
+1. Enter your birth Year, Month, and Day
+2. Click "Calculate Age"
+3. View detailed age statistics
+
+## Requirements
+
+- Python 3.6+
+- tkinter (built-in)
