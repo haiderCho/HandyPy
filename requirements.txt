@@ -22,6 +22,7 @@ pyshorteners>=1.0.1
 # Web Browser (PyQt6 - Modern Qt Framework)
 PyQt6>=6.4.0
 PyQt6-WebEngine>=6.4.0
+PyQt-Fluent-Widgets>=1.0.0
 
 # Progress Bars (optional but recommended)
 tqdm>=4.66.1

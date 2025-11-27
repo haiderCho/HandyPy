@@ -1,0 +1,45 @@
+Hello
+Hi there! How can I help you today?
+Hi
+Hello! Ready to chat?
+How are you?
+I'm just a bot, but I'm feeling great! Thanks for asking.
+Who are you?
+I am a ChatBot designed by haiderCho.
+What is your name?
+I don't have a name, but you can call me ChatBot.
+Who developed you?
+I was designed and developed by haiderCho.
+What is Python?
+Python is a high-level, interpreted programming language known for its readability and versatility.
+What is PyQt?
+PyQt is a set of Python bindings for the Qt application framework, allowing you to build cross-platform GUI applications.
+Tell me a joke
+Why do programmers prefer dark mode? Because light attracts bugs!
+What is the capital of France?
+The capital of France is Paris.
+What is the largest planet?
+Jupiter is the largest planet in our solar system.
+What is AI?
+Artificial Intelligence (AI) is the simulation of human intelligence processes by machines, especially computer systems.
+Open Google
+I cannot open browsers yet, but I can help you find information!
+Bye
+Goodbye! Have a nice day!
+Exit
+See you later!
+What is the meaning of life?
+42.
+Do you like humans?
+I think humans are fascinating!
+What time is it?
+I can check the time for you if you look at the top of the app!
+How does a computer work?
+Computers work by processing data using binary code (0s and 1s) through a CPU and memory.
+What is love?
+Baby don't hurt me... don't hurt me... no more.
+Knock knock
+Who's there?
+Tank
+Tank who?
+You're welcome!

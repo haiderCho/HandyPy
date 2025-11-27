@@ -1,500 +1,480 @@
+import sys
 import time
-import tkinter
-from tkinter import *
-c1 = '#263238'
-c2 = '#faa21f'
-c3 = '#1e282d'
-c6 = '#577e75'
-
-c4 = '#faa21f'
-c5 = '#577e75'
-
-c7 = '#1e282d'
-c8 = '#faa21f'
-
-# Alternative Chat Colours
-'''
-c4 = '#4790f9'
-c5 = '#00a3cf'
-
-c7 = '#85c0f6'
-c8 = '#83e7f2'
-'''
-
-# -------------------------------------------------------------------------------------------
-
-"""
-getting data from entry of
-    'Enter Name' page
-"""
-
-
-def info():
-
-    global myname
-    myname = entry_user.get('1.0', 'end-1c')
-
-    global chatbot
-    chatbot = entry_chat.get('1.0', 'end-1c')
-
-    if myname == "" or chatbot == "":
-        Label(frame_info, text="Fill both fields to proceed.", bg="red",
-              fg="white", font='Verdana 11 bold').place(x=182, y=96)
-        return
-
-    entry_user.delete('1.0', END)
-    entry_chat.delete('1.0', END)
-
-    frame_info.pack_forget()
-    frame_topic.pack()
-
-# ------------------------------------------------------------------------------------------
-
-
-"""
-opening files after selection of
-        topic in topic selestion
-                    page
-"""
-
-
-def topic_1():
-    global no_topic
-    no_topic = 1
-
-    global top
-    top = 'd1_technology.txt'
-
-    global a
-    a = open(top, 'r')
-
-    global doc
-    doc = a.readlines()
-
-    frame_topic.pack_forget()
-    frame_chat.pack()
-
-    topic = 'Technology'
-    label_topic.config(text=topic)
-
-    refresh_screen()
-
-# ----------------------------------------------------------------------------------------------------------
-
-
-"""
-functions for writing in files
-        for writing in files in chat screen
-
-"""
-
-
-def write_ans():
-
-    enter1 = entry_feed.get('1.0', END)
-
-    b.write(enter1)
-    b.close()
-
-    window.destroy()
-
-    """           
-        Reopening of files after
-           changes are saved
-    """
-
-    if no_topic == 1:
-        topic_1()
-
-
-def feed_answer():
-    """
-a seperate window for writing answer
-            on file
-
-    """
-
-    global window
-    window = Tk()
-
-    frame_root = Frame(window, bg=c1)
-    frame_root.pack()
-
-    label = Label(
-        frame_root, text='Enter the answer of Question here ...', bg=c1, fg='white')
-    label.pack()
-
-    global entry_feed
-    entry_feed = Text(frame_root, height=6, width=30, fg='white', bg=c2)
-    entry_feed.bind('<Return>', write_ans)
-    entry_feed.pack()
-
-    button = Button(frame_root, text='Add answer',
-                    command=write_ans, bg=c3, fg='white')
-    button.pack()
-
-
-def write_file():
-    """
-opening file for appending in
-exsisting  files
-
-    """
-    global b
-    b = open(top, 'a')
-
-    b.write(chat_raw)
-    b.write('\n')
-
-    button_write.place_forget()
-    feed_answer()
-
-# ----------------------------------------------------------------------------------------------
-
-
-def refresh_screen():
-
-    for widget in frame_chats.winfo_children():
-        widget.destroy()
-
-    button_write.place_forget()
-    label_space = Label(frame_chats, bg=c1,  text='')
-    label_space.pack()
-
-# ------------------------------------------------------------------------------------------
-
-
-def submit():
-    """
-function for producing response of
-        request of user
-
-    """
-
-    button_write.place_forget()
-    global chat_raw
-    chat_raw = entry.get('1.0', 'end-1c')
-
-    entry.delete('1.0', END)
-
-    chat = chat_raw.lower()
-    chat = chat.replace(' ', '')
-
-    global label_request
-    label_request = Label(frame_chats, text=chat_raw, bg=c4, fg=c7,
-                          justify=LEFT, wraplength=300, font='Verdana 10 bold')
-
-    label_request.pack(anchor='w')
-
-    global answer
-
-    if chat == 'whodevelopedyou?' or chat == 'whoinventedyou?' or chat == 'developer' or chat == 'whoisyourgod?':
-        answer = "Varshith"
-
-    elif chat == "what'smyname?" or chat == "whatsmyname?" or chat == "whatismyname?" or chat == "whatsmyname" or chat == 'myname?' or chat == 'myname':
-        answer = myname
-
-    elif chat == "what'syourname?" or chat == "whatisyourname?" or chat == "whatsyourname?" or chat == "whatsyourname" or chat == 'yourname?' or chat == 'yourname':
-        answer = chatbot
-
-    elif chat == 'bye' or chat == 'goodbye' or chat == 'exit' or chat == 'close' or chat == 'end':
-        answer = 'Bye'
-
-    else:
-        i = 0
-        j = 0
-        for lines in doc:
-            stats = lines[:-1]
-            stats = stats.lower()
-            stat = stats.replace(' ', '')
-            i += 1
-            if stat == chat:
-                answer = doc[i]
-                break
-            else:
-                j += 1
-
-        if i == j:
-            answer = "I don't understand.........please teach me ! "
-            button_write.place(x=430, y=3)
-
-    get_response()
-
-
-def get_response():
-
-    global label_response
-    label_response = Label(frame_chats, text=answer, bg=c5, fg=c8,
-                           justify=LEFT, wraplength=300, font='Verdana 10 bold')
-
-    label_response.pack(anchor='e')
-
-    if answer == 'Bye':
-        root.destroy()
-
-
-# ------------------------------------------------------------------------------------------------------------------
-
-"""
-
-moving from one page to another
-    by help of button
-
-"""
-
-
-def welcome_to_info():
-    frame_welcome.pack_forget()
-    frame_info.pack()
-
-
-def info_to_topic():
-    frame_info.pack_forget()
-    frame_topic.pack()
-
-
-def topic_to_chat():
-    frame_topic.pack_forget()
-    frame_chat.pack()
-
-
-def chat_to_topic():
-    frame_chat.pack_forget()
-    frame_topic.pack()
-
-
-def topic_to_info():
-    frame_topic.pack_forget()
-    frame_info.pack()
-
-
-def info_to_welcome():
-    frame_info.pack_forget()
-    frame_welcome.pack()
-
-
-# -----------------------------------------------------------------------------------
-# --------------------------------------------------------------------------------------------
-"""
-calling constructor to make window
-
-"""
-
-root = Tk()
-
-# ----------------------------------------------------------------------------------------------------
-
-"""  images used in window  """
-
-back = PhotoImage(file='arrow_behind.png')
-
-front = PhotoImage(file='arrow_ahead.png')
-
-exitt = PhotoImage(file='exit.png')
-
-screen_1 = PhotoImage(file='image_5.png')
-
-submit_img = PhotoImage(file='image_8.png')
-
-submit_img = PhotoImage(file='image_8.png')
-# ---------------------------------------------------------------------------------------------------------------------
-
-"""     WELCOME FRAME    """
-"""    first frame containing time date and welcome messages """
-
-frame_welcome = Frame(root, bg=c1, height='670', width='550')
-frame_welcome.pack_propagate(0)
-frame_welcome.pack()
-
-
-welcome = Label(frame_welcome, text='Welcome',
-                font="Vardana 40 bold", bg=c1, fg="white")
-welcome.place(x=160, y=200)
-
-welcome_chatbot = Label(frame_welcome, text='I am Chatbot ! ',
-                        font="Helvetica 15 bold italic", bg=c1, fg=c6)
-welcome_chatbot.place(x=200, y=270)
-
-welcome_chatbot = Label(frame_welcome, text='Designed by VARSHITH ',
-                        font="Helvetica 8 bold", bg=c1, fg='white')
-welcome_chatbot.place(x=415, y=340)
-
-pic_1 = Label(frame_welcome, image=screen_1)
-pic_1.place(x=-3, y=357)
-
-button_front = Button(frame_welcome, image=front, relief="flat", bg=c1,
-                      bd="3px solid black", command=welcome_to_info).place(x=470, y=10)
-
-# __________________________________________________________________
-
-"""  time option  """
-
-
-def clock():
-    current = time.strftime("%H:%M:%S")
-    label_time = Label(frame_welcome, bd=5,  text=current, height=1,
-                       width=8, font='Ariel 11 bold',  fg="white", relief='groove', bg=c3)
-    label_time.place(x=120, y=63)
-
-    label_time.after(1000, clock)
-
-
-button_time = Button(frame_welcome, text='Time', height=1,
-                     font='Vardana 10 bold',  width=8, bg=c2, fg=c1,  command=clock)
-button_time.place(x=30, y=63)
-
-# _____________________________________________________________________________________________________________________
-
-"""    date option   """
-
-
-def date():
-
-    try:
-        date = time.strftime("%d %B , 20%y")
-        label_date = Label(frame_welcome, bd=5, relief='groove',
-                           text=date, bg=c3, fg="white", height=1, font='Ariel 11 bold')
-        label_date.place(x=400, y=63)
-
-        label_date.after(86400000, date)
-
-    except AttributeError:
-        print('')
-
-
-button_date = Button(frame_welcome, text='Date', height=1,
-                     font='Vardana 10 bold',  width=8, bg=c2, fg=c1, command=date)
-button_date.place(x=310, y=63)
-
-# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-"""     INFO FRAME   """
-"""     frame of entering names    """
-
-frame_info = Frame(root, bg=c1, height='670', width='550')
-frame_info.pack_propagate(0)
-
-spacer1 = Label(frame_info, bg=c1)
-spacer1.pack()
-
-spacer2 = Label(frame_info, bg=c1)
-spacer2.pack()
-
-label_sub = Label(frame_info, text="Enter Information",
-                  bg=c1, fg="white", font='Verdana 30')
-label_sub.pack()
-
-user_name = Label(frame_info, text='Enter your name : ',
-                  bg=c1, fg=c2, font='Ariel 15')
-user_name.place(x=80, y=130)
-
-entry_user = Text(frame_info, bg=c6, fg="white",
-                  height='1', width='40', font='Ariel 15')
-entry_user.focus()
-entry_user.place(x=80, y=170)
-
-chatbot_name = Label(
-    frame_info, text='Give a name to your Assistant : ', bg=c1, fg=c2, font='Ariel 15')
-chatbot_name.place(x=80, y=220)
-
-entry_chat = Text(frame_info, bg=c6, fg="white",
-                  height='1', width='40', font='Ariel 15')
-entry_chat.place(x=80, y=260)
-
-button_1 = Button(frame_info, text='submit',
-                  font='Vardana 10 bold', bg=c2, fg=c1, command=info)
-button_1.place(x=470, y=330)
-
-designer_name = Label(
-    frame_info, text='Designed by VARSHITH', bg=c1, fg='white')
-designer_name.place(x=420, y=650)
-
-button_back = Button(frame_info, image=back, relief="flat",
-                     bg=c1, command=info_to_welcome).place(x=10, y=10)
-
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-"""     TOPIC FRAME   """
-""""   frame for topic selection     """
-
-frame_topic = Frame(root, bg=c1, height='670', width='550')
-frame_topic.pack_propagate(0)
-
-spacer3 = Label(frame_topic, bg=c1)
-spacer3.pack()
-
-spacer4 = Label(frame_topic, bg=c1)
-spacer4.pack()
-
-select_label = Label(frame_topic, text="Select Topic",
-                     bg=c1, fg="white", font='Ariel 30 italic')
-select_label.pack()
-
-spacer5 = Label(frame_topic, bg=c1)
-spacer5.pack()
-
-option_1 = Label(frame_topic, text='1- Technology',
-                 font='Verdana 15 italic', bg=c1, fg=c2)
-option_1.place(x=30, y=120)
-
-button_opt_1 = Button(frame_topic, text='Proceed',
-                      image=front, relief="flat", bg=c1, command=topic_1)
-button_opt_1.place(x=350, y=120)
-
-option_2 = Label(frame_topic, text='Designed by VARSHITH',
-                 font='Verdana 8', bg=c1, fg='white')
-option_2.place(x=410, y=650)
-button_back = Button(frame_topic, image=back, relief="flat",
-                     bg=c1, command=topic_to_info).place(x=10, y=10)
-
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-"""         CHAT FRAME   """
-""""       main chat screen   """
-
-frame_chat = Frame(root, bg=c1, height='670', width='550')
-frame_chat.pack_propagate(0)
-
-frame_top = Frame(frame_chat, bg=c3, height='100', width='550')
-frame_top.pack()
-
-label_topic = Label(frame_top, bg=c3, fg='white', font='Verdana 20 bold ')
-label_topic.pack(pady='40')
-
-frame_spacer = Frame(frame_top, bg=c2, height="10", width="550")
-frame_spacer.pack()
-
-bottom_frame = Frame(frame_chat, bg=c2, height='90', width='550')
-bottom_frame.pack_propagate(0)
-bottom_frame.pack(side=BOTTOM)
-
-button = Button(bottom_frame, image=submit_img,
-                font='Vardana 8 bold', bg=c3, command=submit)
-button.place(x=410, y=27)
-
-entry = Text(bottom_frame, bg=c3, fg='white', relief="flat",
-             height='4', width='45', font='Verdana 10')
-entry.bind('<Return>', submit)
-entry.place(x=10, y=9)
-
-frame_chats = Frame(frame_chat, bg='white', height='450', width='500')
-frame_chats.pack_propagate(0)
-frame_chats.pack()
-
-label_space = Label(frame_chats, bg='white').pack()
-
-button_refresh = Button(frame_chat, bg=c3, fg=c2,  text='refresh',
-                        font='Vardana 10 bold',  command=refresh_screen)
-button_refresh.place(x=440, y=80)
-
-button_write = Button(bottom_frame, text=' write here !', width=15,
-                      bg='black', fg='white', font='Vardana 8',  command=write_file)
-
-button_back = Button(frame_chat, image=back, relief="flat",
-                     bg=c3, command=chat_to_topic).place(x=10, y=10)
-button_front = Button(frame_chat, image=exitt, relief="flat",
-                      bg=c3, command=root.destroy).place(x=440, y=10)
-
-# -----------------------------------------------------------------------------------------------------------
-root.mainloop()
-"""    END OF CODE relief = "flat",  """
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
+                             QHBoxLayout, QLabel, QPushButton, QLineEdit, 
+                             QStackedWidget, QMessageBox, QInputDialog,
+                             QFrame, QScrollArea, QSizePolicy, QGraphicsDropShadowEffect)
+from PyQt6.QtCore import QTimer, Qt, QSize, QPropertyAnimation, QEasingCurve, QPoint
+from PyQt6.QtGui import QFont, QColor, QPalette, QBrush, QLinearGradient
+
+# --- Constants & Theme ---
+THEME = {
+    "bg": "#121212",
+    "surface": "#1E1E1E",
+    "primary": "#BB86FC",
+    "secondary": "#03DAC6",
+    "text": "#FFFFFF",
+    "text_dim": "#B0B0B0",
+    "user_bubble": "#3700B3",
+    "bot_bubble": "#2C2C2C",
+    "input_bg": "#2C2C2C",
+    "red": "#CF6679"
+}
+
+FONT_FAMILY = "Segoe UI" # Standard Windows font, looks clean
+
+class ModernButton(QPushButton):
+    def __init__(self, text, color=THEME["primary"], text_color="#000000", parent=None):
+        super().__init__(text, parent)
+        self.setFont(QFont(FONT_FAMILY, 10, QFont.Weight.Bold))
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.setStyleSheet(f"""
+            QPushButton {{
+                background-color: {color};
+                color: {text_color};
+                border-radius: 8px;
+                padding: 10px 20px;
+                border: none;
+            }}
+            QPushButton:hover {{
+                background-color: {color}AA; 
+            }}
+            QPushButton:pressed {{
+                background-color: {color}55;
+            }}
+        """)
+        
+        # Shadow effect
+        shadow = QGraphicsDropShadowEffect(self)
+        shadow.setBlurRadius(10)
+        shadow.setColor(QColor(0, 0, 0, 80))
+        shadow.setOffset(0, 4)
+        self.setGraphicsEffect(shadow)
+
+class ChatBubble(QFrame):
+    def __init__(self, text, is_user=False, parent=None):
+        super().__init__(parent)
+        self.is_user = is_user
+        self.setFrameShape(QFrame.Shape.NoFrame)
+        self.setStyleSheet("background: transparent;")
+        
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(0, 5, 0, 5)
+        
+        # Bubble Content
+        self.bubble = QLabel(text)
+        self.bubble.setFont(QFont(FONT_FAMILY, 11))
+        self.bubble.setWordWrap(True)
+        self.bubble.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+        
+        bg_color = THEME["user_bubble"] if is_user else THEME["bot_bubble"]
+        text_color = THEME["text"]
+        border_radius = "15px"
+        
+        # Different corners for user vs bot
+        radius_style = "15px 15px 0px 15px" if is_user else "15px 15px 15px 0px"
+        
+        self.bubble.setStyleSheet(f"""
+            QLabel {{
+                background-color: {bg_color};
+                color: {text_color};
+                border-radius: {border_radius};
+                border-bottom-right-radius: {0 if is_user else 15}px;
+                border-bottom-left-radius: {15 if is_user else 0}px;
+                padding: 12px 16px;
+            }}
+        """)
+        
+        # Shadow for bubble
+        shadow = QGraphicsDropShadowEffect(self.bubble)
+        shadow.setBlurRadius(8)
+        shadow.setColor(QColor(0, 0, 0, 60))
+        shadow.setOffset(0, 2)
+        self.bubble.setGraphicsEffect(shadow)
+
+        if is_user:
+            layout.addStretch()
+            layout.addWidget(self.bubble)
+        else:
+            layout.addWidget(self.bubble)
+            layout.addStretch()
+
+class ChatBotWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("HandyPy ChatBot")
+        self.setGeometry(100, 100, 450, 700) # Mobile-like aspect ratio
+        
+        # Set Window Background
+        self.setStyleSheet(f"background-color: {THEME['bg']};")
+
+        # Data
+        self.user_name = "User"
+        self.bot_name = "Bot"
+        self.topic_file = "chatbot_data.txt"
+        self.qa_data = []
+
+        # Central Widget
+        self.central_widget = QWidget()
+        self.setCentralWidget(self.central_widget)
+        self.main_layout = QVBoxLayout(self.central_widget)
+        self.main_layout.setContentsMargins(0, 0, 0, 0)
+
+        # Stacked Widget for Navigation
+        self.stack = QStackedWidget()
+        self.main_layout.addWidget(self.stack)
+
+        # Initialize Pages
+        self.init_welcome_page()
+        self.init_info_page()
+        self.init_topic_page()
+        self.init_chat_page()
+
+        # Add pages to stack
+        self.stack.addWidget(self.page_welcome)
+        self.stack.addWidget(self.page_info)
+        self.stack.addWidget(self.page_topic)
+        self.stack.addWidget(self.page_chat)
+
+        self.stack.setCurrentWidget(self.page_welcome)
+
+    def init_welcome_page(self):
+        self.page_welcome = QWidget()
+        layout = QVBoxLayout(self.page_welcome)
+        layout.setContentsMargins(40, 60, 40, 40)
+        layout.setSpacing(20)
+
+        # Header Area (Time/Date)
+        header_layout = QHBoxLayout()
+        self.lbl_datetime = QLabel()
+        self.lbl_datetime.setFont(QFont(FONT_FAMILY, 10))
+        self.lbl_datetime.setStyleSheet(f"color: {THEME['text_dim']};")
+        header_layout.addWidget(self.lbl_datetime)
+        header_layout.addStretch()
+        layout.addLayout(header_layout)
+
+        layout.addStretch()
+
+        # Hero Section
+        lbl_welcome = QLabel("Hello.")
+        lbl_welcome.setFont(QFont(FONT_FAMILY, 48, QFont.Weight.Bold))
+        lbl_welcome.setStyleSheet(f"color: {THEME['text']};")
+        layout.addWidget(lbl_welcome)
+
+        lbl_sub = QLabel("I'm your personal AI assistant.\nReady to help you.")
+        lbl_sub.setFont(QFont(FONT_FAMILY, 16))
+        lbl_sub.setStyleSheet(f"color: {THEME['text_dim']};")
+        lbl_sub.setWordWrap(True)
+        layout.addWidget(lbl_sub)
+
+        layout.addStretch()
+
+        # Action
+        btn_start = ModernButton("Get Started", color=THEME["secondary"], text_color="#000000")
+        btn_start.clicked.connect(lambda: self.stack.setCurrentWidget(self.page_info))
+        layout.addWidget(btn_start)
+
+        # Footer
+        lbl_footer = QLabel("Designed by haiderCho")
+        lbl_footer.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        lbl_footer.setStyleSheet(f"color: {THEME['text_dim']}; font-size: 10px;")
+        layout.addWidget(lbl_footer)
+
+        # Timer
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_datetime)
+        self.timer.start(1000)
+        self.update_datetime()
+
+    def update_datetime(self):
+        self.lbl_datetime.setText(time.strftime("%A, %d %B %H:%M"))
+
+    def init_info_page(self):
+        self.page_info = QWidget()
+        layout = QVBoxLayout(self.page_info)
+        layout.setContentsMargins(40, 40, 40, 40)
+        layout.setSpacing(20)
+
+        # Back Button
+        btn_back = QPushButton("← Back")
+        btn_back.setStyleSheet(f"color: {THEME['text_dim']}; border: none; text-align: left; font-size: 14px;")
+        btn_back.setCursor(Qt.CursorShape.PointingHandCursor)
+        btn_back.clicked.connect(lambda: self.stack.setCurrentWidget(self.page_welcome))
+        layout.addWidget(btn_back)
+
+        layout.addSpacing(20)
+
+        lbl_title = QLabel("Let's get to know\neach other.")
+        lbl_title.setFont(QFont(FONT_FAMILY, 24, QFont.Weight.Bold))
+        lbl_title.setStyleSheet(f"color: {THEME['text']};")
+        layout.addWidget(lbl_title)
+
+        layout.addSpacing(20)
+
+        # Inputs
+        self.input_user_name = QLineEdit()
+        self.input_user_name.setPlaceholderText("Your Name")
+        self.style_input(self.input_user_name)
+        layout.addWidget(self.input_user_name)
+
+        self.input_bot_name = QLineEdit()
+        self.input_bot_name.setPlaceholderText("Assistant Name")
+        self.style_input(self.input_bot_name)
+        layout.addWidget(self.input_bot_name)
+
+        layout.addStretch()
+
+        btn_continue = ModernButton("Continue")
+        btn_continue.clicked.connect(self.submit_info)
+        layout.addWidget(btn_continue)
+
+    def style_input(self, widget):
+        widget.setFixedHeight(50)
+        widget.setFont(QFont(FONT_FAMILY, 12))
+        widget.setStyleSheet(f"""
+            QLineEdit {{
+                background-color: {THEME['surface']};
+                color: {THEME['text']};
+                border: 1px solid {THEME['surface']};
+                border-radius: 8px;
+                padding: 0 15px;
+            }}
+            QLineEdit:focus {{
+                border: 1px solid {THEME['primary']};
+            }}
+        """)
+
+    def submit_info(self):
+        u = self.input_user_name.text().strip()
+        b = self.input_bot_name.text().strip()
+        if u: self.user_name = u
+        if b: self.bot_name = b
+        self.stack.setCurrentWidget(self.page_topic)
+
+    def init_topic_page(self):
+        self.page_topic = QWidget()
+        layout = QVBoxLayout(self.page_topic)
+        layout.setContentsMargins(40, 40, 40, 40)
+        layout.setSpacing(20)
+
+        btn_back = QPushButton("← Back")
+        btn_back.setStyleSheet(f"color: {THEME['text_dim']}; border: none; text-align: left; font-size: 14px;")
+        btn_back.setCursor(Qt.CursorShape.PointingHandCursor)
+        btn_back.clicked.connect(lambda: self.stack.setCurrentWidget(self.page_info))
+        layout.addWidget(btn_back)
+
+        layout.addSpacing(20)
+
+        lbl_title = QLabel("Choose a Topic")
+        lbl_title.setFont(QFont(FONT_FAMILY, 24, QFont.Weight.Bold))
+        lbl_title.setStyleSheet(f"color: {THEME['text']};")
+        layout.addWidget(lbl_title)
+
+        layout.addSpacing(20)
+
+        # Topic Card
+        card = QFrame()
+        card.setStyleSheet(f"""
+            QFrame {{
+                background-color: {THEME['surface']};
+                border-radius: 12px;
+            }}
+        """)
+        card_layout = QHBoxLayout(card)
+        card_layout.setContentsMargins(20, 20, 20, 20)
+        
+        lbl_topic = QLabel("General Chat")
+        lbl_topic.setFont(QFont(FONT_FAMILY, 14, QFont.Weight.Bold))
+        lbl_topic.setStyleSheet(f"color: {THEME['text']};")
+        
+        btn_go = QPushButton("Start >")
+        btn_go.setCursor(Qt.CursorShape.PointingHandCursor)
+        btn_go.setStyleSheet(f"color: {THEME['secondary']}; font-weight: bold; border: none; font-size: 14px;")
+        btn_go.clicked.connect(self.load_chat)
+
+        card_layout.addWidget(lbl_topic)
+        card_layout.addStretch()
+        card_layout.addWidget(btn_go)
+
+        layout.addWidget(card)
+        layout.addStretch()
+
+    def init_chat_page(self):
+        self.page_chat = QWidget()
+        layout = QVBoxLayout(self.page_chat)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+
+        # Header
+        header = QFrame()
+        header.setStyleSheet(f"background-color: {THEME['surface']}; border-bottom: 1px solid #333;")
+        header.setFixedHeight(60)
+        header_layout = QHBoxLayout(header)
+        header_layout.setContentsMargins(15, 0, 15, 0)
+
+        btn_back = QPushButton("←")
+        btn_back.setStyleSheet(f"color: {THEME['text']}; border: none; font-size: 20px; font-weight: bold;")
+        btn_back.setCursor(Qt.CursorShape.PointingHandCursor)
+        btn_back.clicked.connect(lambda: self.stack.setCurrentWidget(self.page_topic))
+        
+        self.lbl_chat_title = QLabel("Chat")
+        self.lbl_chat_title.setFont(QFont(FONT_FAMILY, 12, QFont.Weight.Bold))
+        self.lbl_chat_title.setStyleSheet(f"color: {THEME['text']};")
+        self.lbl_chat_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        btn_menu = QPushButton("⋮")
+        btn_menu.setStyleSheet(f"color: {THEME['text']}; border: none; font-size: 20px; font-weight: bold;")
+        btn_menu.setCursor(Qt.CursorShape.PointingHandCursor)
+        btn_menu.clicked.connect(self.show_menu)
+
+        header_layout.addWidget(btn_back)
+        header_layout.addWidget(self.lbl_chat_title, 1)
+        header_layout.addWidget(btn_menu)
+
+        layout.addWidget(header)
+
+        # Chat Area
+        self.scroll_area = QScrollArea()
+        self.scroll_area.setWidgetResizable(True)
+        self.scroll_area.setStyleSheet(f"background-color: {THEME['bg']}; border: none;")
+        self.scroll_area.verticalScrollBar().setStyleSheet(f"""
+            QScrollBar:vertical {{
+                background: {THEME['bg']};
+                width: 8px;
+            }}
+            QScrollBar::handle:vertical {{
+                background: {THEME['surface']};
+                border-radius: 4px;
+            }}
+        """)
+        
+        self.chat_container = QWidget()
+        self.chat_layout = QVBoxLayout(self.chat_container)
+        self.chat_layout.setContentsMargins(15, 15, 15, 15)
+        self.chat_layout.setSpacing(15)
+        self.chat_layout.addStretch()
+
+        self.scroll_area.setWidget(self.chat_container)
+        layout.addWidget(self.scroll_area)
+
+        # Input Area
+        input_frame = QFrame()
+        input_frame.setStyleSheet(f"background-color: {THEME['surface']};")
+        input_layout = QHBoxLayout(input_frame)
+        input_layout.setContentsMargins(10, 10, 10, 10)
+
+        self.chat_input = QLineEdit()
+        self.chat_input.setPlaceholderText("Type a message...")
+        self.chat_input.setFont(QFont(FONT_FAMILY, 11))
+        self.chat_input.setStyleSheet(f"""
+            QLineEdit {{
+                background-color: {THEME['input_bg']};
+                color: {THEME['text']};
+                border: none;
+                border-radius: 20px;
+                padding: 10px 15px;
+            }}
+        """)
+        self.chat_input.returnPressed.connect(self.send_message)
+
+        btn_send = QPushButton("➤")
+        btn_send.setFixedSize(40, 40)
+        btn_send.setCursor(Qt.CursorShape.PointingHandCursor)
+        btn_send.setStyleSheet(f"""
+            QPushButton {{
+                background-color: {THEME['primary']};
+                color: white;
+                border-radius: 20px;
+                font-size: 16px;
+            }}
+            QPushButton:hover {{ background-color: {THEME['primary']}DD; }}
+        """)
+        btn_send.clicked.connect(self.send_message)
+
+        input_layout.addWidget(self.chat_input)
+        input_layout.addWidget(btn_send)
+
+        layout.addWidget(input_frame)
+
+    def load_chat(self):
+        try:
+            with open(self.topic_file, 'r') as f:
+                self.qa_data = [line.strip() for line in f.readlines()]
+        except FileNotFoundError:
+            QMessageBox.critical(self, "Error", "Data file not found.")
+            return
+        
+        self.lbl_chat_title.setText(self.bot_name)
+        self.stack.setCurrentWidget(self.page_chat)
+        
+        # Add initial greeting if empty
+        if self.chat_layout.count() == 1: # Only stretch
+            self.add_bubble(f"Hello {self.user_name}! I am {self.bot_name}.", False)
+
+    def send_message(self):
+        text = self.chat_input.text().strip()
+        if not text: return
+        
+        self.chat_input.clear()
+        self.add_bubble(text, True)
+        
+        # Process response
+        QTimer.singleShot(600, lambda: self.process_response(text))
+
+    def process_response(self, text):
+        response = self.get_response(text)
+        self.add_bubble(response, False)
+        
+        if response == 'Bye':
+            QTimer.singleShot(1500, self.close)
+
+    def add_bubble(self, text, is_user):
+        bubble = ChatBubble(text, is_user)
+        self.chat_layout.insertWidget(self.chat_layout.count()-1, bubble)
+        
+        # Scroll to bottom
+        QTimer.singleShot(100, lambda: self.scroll_area.verticalScrollBar().setValue(
+            self.scroll_area.verticalScrollBar().maximum()
+        ))
+
+    def get_response(self, text):
+        chat = text.lower().replace(' ', '')
+        
+        # Hardcoded responses
+        if chat in ['whodevelopedyou?', 'whoinventedyou?', 'developer']:
+            return "I was designed by haiderCho."
+        if chat in ["what'smyname?", "myname?"]:
+            return f"Your name is {self.user_name}."
+        if chat in ["what'syourname?", "yourname?"]:
+            return f"I am {self.bot_name}."
+        if chat in ['bye', 'goodbye', 'exit']:
+            return "Bye"
+            
+        # File matching
+        for i in range(len(self.qa_data)):
+            line = self.qa_data[i].lower().replace(' ', '')
+            if line == chat:
+                if i + 1 < len(self.qa_data):
+                    return self.qa_data[i+1]
+        
+        return "I'm not sure how to answer that. You can teach me!"
+
+    def show_menu(self):
+        # Simple menu to add new answers
+        text, ok = QInputDialog.getText(self, "Teach Bot", "Enter a new answer to add to the database:")
+        if ok and text:
+            try:
+                with open(self.topic_file, 'a') as f:
+                    f.write(text + "\n")
+                self.load_chat() # Reload data
+                QMessageBox.information(self, "Success", "I've learned something new!")
+            except Exception as e:
+                QMessageBox.warning(self, "Error", str(e))
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    app.setStyle("Fusion") # Better cross-platform look
+    
+    window = ChatBotWindow()
+    window.show()
+    sys.exit(app.exec())
