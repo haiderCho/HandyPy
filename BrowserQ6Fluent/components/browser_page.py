@@ -1,6 +1,7 @@
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtWebEngineWidgets import *
+from PyQt6.QtWebEngineCore import QWebEngineSettings
 from qfluentwidgets import ToolButton, LineEdit, FluentIcon as FIF
 from config import cfg
 from components.start_page import StartPage
@@ -67,6 +68,22 @@ class BrowserPage(QWidget):
             self.load_url(url)
         else:
             self.go_home()
+            
+        # Security & UI
+        self.configure_security()
+        self.setStyleSheet("background-color: transparent;")
+
+    def configure_security(self):
+        settings = self.browser.settings()
+        # Security options
+        settings.setAttribute(QWebEngineSettings.WebAttribute.JavascriptCanOpenWindows, False)
+        settings.setAttribute(QWebEngineSettings.WebAttribute.LocalStorageEnabled, True)
+        settings.setAttribute(QWebEngineSettings.WebAttribute.PluginsEnabled, False)
+        settings.setAttribute(QWebEngineSettings.WebAttribute.DnsPrefetchEnabled, False)
+        
+        # Optional: Set user agent or other profile settings if needed
+        # profile = self.browser.page().profile()
+        # profile.setHttpUserAgent("NHC Browser/1.0")
 
     def load_url(self, url):
         if url == "nhc://start":
@@ -92,13 +109,7 @@ class BrowserPage(QWidget):
         # Check if it's a search query or URL
         if " " in url or "." not in url:
             engine = cfg.get("search_engine")
-            search_urls = {
-                "Google": "https://www.google.com/search?q=",
-                "Bing": "https://www.bing.com/search?q=",
-                "DuckDuckGo": "https://duckduckgo.com/?q=",
-                "Yahoo": "https://search.yahoo.com/search?p="
-            }
-            base_url = search_urls.get(engine, search_urls["Google"])
+            base_url = cfg.SEARCH_ENGINES.get(engine, cfg.SEARCH_ENGINES["Google"])
             url = base_url + url
         elif not url.startswith("http"):
             url = "https://" + url
