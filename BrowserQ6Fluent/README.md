@@ -1,7 +1,7 @@
-# Epic Browser - User Guide
+# NHC Browser - User Guide
 
 ## Overview
-Epic Browser is a modern, feature-rich web browser built with PyQt6 and Qt WebEngine (Chromium-based). It provides a fast, secure browsing experience with all the essential features you need.
+NHC Browser is a modern, feature-rich web browser built with PyQt6, Qt WebEngine (Chromium-based), and PyQt-Fluent-Widgets. It provides a fast, secure browsing experience with a beautiful Fluent Design interface.
 
 ## Features
 
@@ -33,12 +33,12 @@ Epic Browser is a modern, feature-rich web browser built with PyQt6 and Qt WebEn
 ### 🔍 Navigation
 - **Back/Forward**: Use ← and → buttons or browser shortcuts
 - **Reload**: Click ↻ button or press F5
-- **Home**: Click ⌂ button to return to Google
+- **Home**: Click ⌂ button to return to the Start Page
 - **Stop Loading**: Click Stop button
 
 ### 🔎 Smart URL Bar
 - **Enter URLs**: Type any URL (http:// added automatically)
-- **Search**: Type search queries directly (uses Google search)
+- **Search**: Type search queries directly (uses your selected search engine)
 - **Auto-complete**: Shows current page URL
 
 ### 🔬 Zoom Controls
@@ -67,7 +67,7 @@ All your preferences are automatically saved:
 - **Bookmarks**: Saved permanently
 - **History**: Last 100 pages
 - **Theme**: Dark/Light preference
-- **Location**: `~/.epic_browser_config.json`
+- **Location**: `~/.nhc_browser_config.json`
 
 ## Usage Tips
 
@@ -83,10 +83,10 @@ All your preferences are automatically saved:
 4. Organize by opening bookmarks dialog
 
 ### Searching the Web
-Just type your search query in the URL bar without visiting Google first:
+Just type your search query in the URL bar:
 - Type: `python tutorials`
 - Press Enter
-- Automatically searches Google
+- Automatically searches using your default search engine (Google, Bing, DuckDuckGo, Yahoo, Startpage, or Ecosia)
 
 ### Customizing Appearance
 - Toggle between dark and light themes instantly
@@ -96,7 +96,7 @@ Just type your search query in the URL bar without visiting Google first:
 ## Technical Details
 
 **Browser Engine**: Qt WebEngine (Chromium-based)
-**Framework**: PyQt6
+**Framework**: PyQt6 & PyQt-Fluent-Widgets
 **Configuration**: JSON file in home directory
 **History Limit**: 100 most recent pages
 **Bookmark Limit**: Unlimited (10 shown in menu)
@@ -104,12 +104,12 @@ Just type your search query in the URL bar without visiting Google first:
 ## Troubleshooting
 
 **Browser won't start?**
-- Ensure PyQt6 and PyQt6-WebEngine are installed
-- Run: `pip install PyQt6>=6.4.0 PyQt6-WebEngine>=6.4.0`
+- Ensure PyQt6, PyQt6-WebEngine, and PyQt-Fluent-Widgets are installed
+- Run: `pip install PyQt6 PyQt6-WebEngine "PyQt-Fluent-Widgets[full]"`
 
 **Bookmarks not saving?**
 - Check write permissions in home directory
-- Config file: `~/.epic_browser_config.json`
+- Config file: `~/.nhc_browser_config.json`
 
 **Slow performance?**
 - Reduce number of open tabs
@@ -120,9 +120,9 @@ Just type your search query in the URL bar without visiting Google first:
 
 - **History**: Stored locally only, last 100 pages
 - **Bookmarks**: Stored locally only
-- **No Tracking**: Epic Browser does not track you
+- **No Tracking**: NHC Browser does not track you
 - **Clear Data**: Use History → Clear History to remove all history
 
 ---
 
-Enjoy browsing with Epic Browser! 🚀
+Enjoy browsing with NHC Browser! 🚀
